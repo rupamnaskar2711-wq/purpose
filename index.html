@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Makes the page work properly on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For You ❤️</title>
+
+    <style>
+        /* =========================
+           BASIC PAGE SETTINGS
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080010;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Every screen fills the entire window */
+        .screen {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* The first screen is visible */
+        .active {
+            display: flex;
+        }
+
+        h1 {
+            font-size: clamp(35px, 8vw, 70px);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        button {
+            border: none;
+            padding: 14px 28px;
+            margin: 12px;
+            border-radius: 30px;
+            background: #ff4f91;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            background: #ff75aa;
+        }
+
+        /* =========================
+           LOADING SCREEN
+        ========================== */
+
+        #loading {
+            background:
+                radial-gradient(circle, #35104d, #080010);
+        }
+
+        .loader-heart {
+            font-size: 80px;
+            animation: heartbeat 1s infinite;
+        }
+
+        #countdown {
+            font-size: 55px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.25);
+            }
+        }
+
+        /* =========================
+           ENVELOPE
+        ========================== */
+
+        #envelopeScreen {
+            background: linear-gradient(135deg, #17001f, #3d073c);
+        }
+
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #ff6b9d;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 15px 50px rgba(255, 70, 150, 0.4);
+        }
+
+        /* Envelope triangular flap */
+        .flap {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #ff91b6;
+            top: 0;
+            left: 0;
+            transform-origin: top;
+            transition: 0.8s;
+            z-index: 3;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .letter {
+            position: absolute;
+            width: 230px;
+            height: 150px;
+            background: white;
+            color: #333;
+            left: 25px;
+            top: 15px;
+            border-radius: 5px;
+            padding: 20px;
+            transition: 1s;
+            z-index: 2;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-120px);
+        }
+
+        .heart-seal {
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 45px;
+        }
+
+        /* =========================
+           MESSAGE SCREEN
+        ========================== */
+
+        #messageScreen {
+            background: radial-gradient(circle, #4c0b3f, #100014);
+        }
+
+        .message-box {
+            max-width: 650px;
+            animation: appear 1.5s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           QUESTION SCREEN
+        ========================== */
+
+        #questionScreen {
+            background: linear-gradient(135deg, #120018, #39002d);
+        }
+
+        .question-box {
+            max-width: 700px;
+        }
+
+        .choice {
+            background: #ff4f91;
+        }
+
+        /* =========================
+           FINAL SCREEN
+        ========================== */
+
+        #finalScreen {
+            background:
+                radial-gradient(circle at center, #5e0d4d, #080010);
+        }
+
+        .final-heart {
+            font-size: 100px;
+            animation: heartbeat 1s infinite;
+        }
+
+        /* =========================
+           FLOATING HEARTS
+        ========================== */
+
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 25px;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           STORY TIMER
+        ========================== */
+
+        .story-timer {
+            position: absolute;
+            top: 20px;
+            width: 80%;
+            height: 5px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .story-progress {
+            height: 100%;
+            width: 0%;
+            background: white;
+            transition: width 3s linear;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         SCREEN 1: LOADING
+    ========================== -->
+
+    <section id="loading" class="screen active">
+
+        <div class="loader-heart">❤️</div>
+
+        <h1>Something Special...</h1>
+
+        <p>Please wait</p>
+
+        <!-- 3 second timer appears here -->
+        <div id="countdown">3</div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 2: ENVELOPE
+    ========================== -->
+
+    <section id="envelopeScreen" class="screen">
+
+        <h1>💌 For You</h1>
+
+        <p>Tap the envelope</p>
+
+        <br>
+
+        <div class="envelope" id="envelope">
+
+            <div class="letter">
+                <b>Hey You ❤️</b>
+                <br><br>
+                I have something special to tell you...
+            </div>
+
+            <div class="flap"></div>
+
+            <div class="heart-seal">❤️</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 3: MESSAGE
+    ========================== -->
+
+    <section id="messageScreen" class="screen">
+
+        <div class="message-box">
+
+            <h1>💖 For You</h1>
+
+            <p>
+                Sometimes a person comes into your life
+                and makes ordinary moments feel special.
+            </p>
+
+            <br>
+
+            <p>
+                And this little message is just for you. ❤️
+            </p>
+
+            <button onclick="showScreen('lateScreen')">
+                Continue ✨
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 4: LATE NIGHT
+    ========================== -->
+
+    <section id="lateScreen" class="screen">
+
+        <div class="message-box">
+
+            <h1>🌙 Late Night Talks?</h1>
+
+            <p>
+                The kind where we talk about everything
+                and somehow lose track of time...
+            </p>
+
+            <button onclick="showScreen('questionScreen')">
+                Yes, definitely ❤️
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 5: QUESTION
+    ========================== -->
+
+    <section id="questionScreen" class="screen">
+
+        <div class="question-box">
+
+            <h1>💌 One Question...</h1>
+
+            <p>
+                Would you like to make more
+                beautiful memories together?
+            </p>
+
+            <br>
+
+            <button class="choice" onclick="showScreen('girlfriendScreen')">
+                Yes ❤️
+            </button>
+
+            <button class="choice" onclick="showScreen('girlfriendScreen')">
+                Of course 💖
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 6
+    ========================== -->
+
+    <section id="girlfriendScreen" class="screen">
+
+        <div class="message-box">
+
+            <h1>❤️ One Last Thing...</h1>
+
+            <p>
+                Will you be my girlfriend?
+            </p>
+
+            <br>
+
+            <button onclick="showScreen('finalScreen')">
+                Yes ❤️
+            </button>
+
+            <button onclick="showScreen('finalScreen')">
+                Absolutely 💖
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCREEN 7: FINAL
+    ========================== -->
+
+    <section id="finalScreen" class="screen">
+
+        <div class="story-timer">
+            <div class="story-progress" id="progress"></div>
+        </div>
+
+        <div class="final-heart">💖</div>
+
+        <h1>Yaaay! 🎉</h1>
+
+        <p>
+            Here's to all the beautiful moments
+            waiting ahead. 💝
+        </p>
+        
+        <br>
+
+        <p id="finalText">
+            You just made this little story special.
+        </p>
+        <button onclick="startTimer()">Start Timer</button>
+    </section>
+
+    <script>
+        let startTime = null;
+
+        function showElapsedTime() {
+            if (!startTime) {
+                return;
+            }
+
+            const diff = Date.now() - startTime;
+            const seconds = Math.floor(diff / 1000) % 60;
+            const minutes = Math.floor(diff / (1000 * 60)) % 60;
+            const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            document.getElementById("finalText").textContent =
+                `Elapsed: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        function startTimer() {
+            if (!startTime) {
+                startTime = Date.now();
+            }
+            showElapsedTime();
+        }
+
+        setInterval(showElapsedTime, 1000);
+    </script>
+
+    <script>
+
+        /* =================================
+           GET ALL SCREENS
+        ================================= */
+
+        const screens = document.querySelectorAll(".screen");
+
+
+        /* =================================
+           FUNCTION TO CHANGE SCREEN
+        ================================= */
+
+        function showScreen(id) {
+
+            // Hide every screen
+            screens.forEach(screen => {
+                screen.classList.remove("active");
+            });
+
+            // Show selected screen
+            document.getElementById(id).classList.add("active");
+
+            // Start floating hearts
+            createHearts();
+
+            // Start 3-second story timer
+            if (id === "finalScreen") {
+
+                const progress =
+                    document.getElementById("progress");
+
+                progress.style.width = "0%";
+
+                setTimeout(() => {
+                    progress.style.width = "100%";
+                }, 100);
+            }
+        }
+
+
+        /* =================================
+           3 SECOND COUNTDOWN
+        ================================= */
+
+        let time = 3;
+
+        const countdown =
+            document.getElementById("countdown");
+
+        const timer = setInterval(() => {
+
+            time--;
+
+            countdown.textContent = time;
+
+            if (time <= 0) {
+
+                clearInterval(timer);
+
+                // Move to envelope after 3 seconds
+                setTimeout(() => {
+                    showScreen("envelopeScreen");
+                }, 300);
+
+            }
+
+        }, 1000);
+
+
+        /* =================================
+           ENVELOPE OPENING
+        ================================= */
+
+        const envelope =
+            document.getElementById("envelope");
+
+        envelope.addEventListener("click", () => {
+
+            // Open envelope
+            envelope.classList.add("open");
+
+            // Wait for animation
+            setTimeout(() => {
+
+                showScreen("messageScreen");
+
+            }, 1800);
+
+        });
+
+
+        /* =================================
+           FLOATING HEART GENERATOR
+        ================================= */
+
+        function createHearts() {
+
+            // Create 12 hearts
+            for (let i = 0; i < 12; i++) {
+
+                const heart =
+                    document.createElement("div");
+
+                heart.className = "heart";
+
+                // Random heart symbol
+                const symbols = [
+                    "💝💝",
+                    "💘",
+                    "💖",
+                    "💕",
+                    "💗",
+                    "💓"
+                ];
+
+                heart.textContent =
+                    symbols[Math.floor(Math.random() * symbols.length)];
+
+                // Random horizontal position
+                heart.style.left =
+                    Math.random() * 100 + "vw";
+
+                // Random size
+                heart.style.fontSize =
+                    (15 + Math.random() * 25) + "px";
+
+                // Random animation speed
+                heart.style.animationDuration =
+                    (3 + Math.random() * 4) + "s";
+
+                document.body.appendChild(heart);
+
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }
+        }
+
+
+        /* =================================
+           INITIAL HEARTS
+        ================================= */
+
+        createHearts();
+
+    </script>
+
+</body>
+</html>
