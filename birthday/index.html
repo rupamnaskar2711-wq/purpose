@@ -1660,7 +1660,7 @@ With lots of wishes,
 
 📸
 
-<label for="photoInput">Add Photo</label>
+<button type="button" id="photoButton">Add Photo</button>
 
 <input id="photoInput" type="file" accept="image/*">
 
@@ -2510,27 +2510,38 @@ function stopMusic(){
 const photoInput = document.getElementById("photoInput");
 const birthdayPhoto = document.getElementById("birthdayPhoto");
 const photoUpload = document.getElementById("photoUpload");
-let photoUrl = null;
+
+document.getElementById("photoButton").addEventListener("click", function(){
+    photoInput.click();
+});
+
+function displayBirthdayPhoto(source){
+    birthdayPhoto.src = source;
+    birthdayPhoto.hidden = false;
+    photoUpload.hidden = true;
+}
+
+const savedPhoto = localStorage.getItem("birthdayPhoto");
+
+if(savedPhoto)
+    displayBirthdayPhoto(savedPhoto);
 
 photoInput.addEventListener("change", function(){
 
     const file = photoInput.files[0];
 
-    if(!file)
+    if(!file || !file.type.startsWith("image/"))
         return;
 
-    if(!file.type.startsWith("image/")){
-        photoInput.value="";
-        return;
-    }
+    const reader = new FileReader();
 
-    if(photoUrl)
-        URL.revokeObjectURL(photoUrl);
+    reader.addEventListener("load", function(){
+        const source = reader.result;
+        localStorage.setItem("birthdayPhoto", source);
+        displayBirthdayPhoto(source);
+    });
 
-    photoUrl = URL.createObjectURL(file);
-    birthdayPhoto.src = photoUrl;
-    birthdayPhoto.hidden = false;
-    photoUpload.hidden = true;
+    reader.readAsDataURL(file);
 
 });
 
