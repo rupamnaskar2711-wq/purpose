@@ -809,6 +809,32 @@ section{
 
 }
 
+.photo-upload button{
+    border:0;
+    padding:12px 22px;
+    border-radius:25px;
+    background:#ff4f91;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.photo-consent{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:240px;
+    color:#ffffffaa;
+    font-size:13px;
+    line-height:1.4;
+}
+
+.photo-status{
+    max-width:240px;
+    color:#ffffffaa;
+    font-size:13px;
+}
+
 /* =====================================================
    REWARD
 ===================================================== */
@@ -1664,6 +1690,13 @@ With lots of wishes,
 
 <input id="photoInput" type="file" accept="image/*">
 
+<label class="photo-consent">
+<input id="photoConsent" type="checkbox">
+I agree to send this photo to the birthday page owner.
+</label>
+
+<span class="photo-status" id="photoStatus"></span>
+
 </div>
 
 </div>
@@ -2508,41 +2541,44 @@ function stopMusic(){
 
 
 const photoInput = document.getElementById("photoInput");
-const birthdayPhoto = document.getElementById("birthdayPhoto");
-const photoUpload = document.getElementById("photoUpload");
+const photoButton = document.getElementById("photoButton");
+const photoConsent = document.getElementById("photoConsent");
+const photoStatus = document.getElementById("photoStatus");
+const uploadApiUrl = "https://YOUR-VERCEL-PROJECT.vercel.app/api/upload";
 
-document.getElementById("photoButton").addEventListener("click", function(){
-    photoInput.click();
-});
-
-function displayBirthdayPhoto(source){
-    birthdayPhoto.src = source;
-    birthdayPhoto.hidden = false;
-    photoUpload.hidden = true;
-}
-
-const savedPhoto = localStorage.getItem("birthdayPhoto");
-
-if(savedPhoto)
-    displayBirthdayPhoto(savedPhoto);
-
-photoInput.addEventListener("change", function(){
-
-    const file = photoInput.files[0];
-
-    if(!file || !file.type.startsWith("image/"))
+photoButton.addEventListener("click", function(){
+    if(!photoInput.files[0]){
+        photoInput.click();
         return;
+    }
 
-    const reader = new FileReader();
+    if(!photoConsent.checked){
+        photoStatus.textContent = "Please agree before sending the photo.";
+        return;
+    }
 
-    reader.addEventListener("load", function(){
-        const source = reader.result;
-        localStorage.setItem("birthdayPhoto", source);
-        displayBirthdayPhoto(source);
+    const formData = new FormData();
+    formData.append("photo", photoInput.files[0]);
+    photoStatus.textContent = "Sending photo...";
+    photoButton.disabled = true;
+
+    fetch(uploadApiUrl, {
+        method: "POST",
+        body: formData
+    })
+    .then(function(response){
+        if(!response.ok)
+            throw new Error("Upload failed");
+        return response.json();
+    })
+    .then(function(){
+        photoStatus.textContent = "Photo sent successfully. Thank you!";
+        photoButton.textContent = "Photo Sent";
+    })
+    .catch(function(){
+        photoStatus.textContent = "Could not send the photo. Please try again.";
+        photoButton.disabled = false;
     });
-
-    reader.readAsDataURL(file);
-
 });
 
 </script>
