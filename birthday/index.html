@@ -1,0 +1,2467 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Midnight Birthday Surprise 🎂</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#050008;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-10;
+
+    background:
+    radial-gradient(circle at 20% 20%,#8e24aa44,transparent 35%),
+    radial-gradient(circle at 80% 80%,#ff149344,transparent 35%),
+    linear-gradient(135deg,#050008,#180021,#050008);
+
+    animation:bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove{
+
+    from{
+        filter:hue-rotate(0deg);
+    }
+
+    to{
+        filter:hue-rotate(25deg);
+    }
+
+}
+
+/* =====================================================
+   STARS
+===================================================== */
+
+.star{
+    position:fixed;
+
+    width:3px;
+    height:3px;
+
+    border-radius:50%;
+    background:white;
+
+    pointer-events:none;
+
+    animation:twinkle 2s infinite alternate;
+
+    z-index:-5;
+}
+
+@keyframes twinkle{
+
+    from{
+        opacity:.15;
+        transform:scale(.5);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1.5);
+    }
+
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+nav{
+
+    position:fixed;
+
+    top:15px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:94%;
+    max-width:850px;
+
+    padding:10px;
+
+    display:flex;
+    justify-content:center;
+    gap:8px;
+
+    background:#ffffff12;
+
+    border:1px solid #ffffff20;
+
+    backdrop-filter:blur(18px);
+
+    border-radius:50px;
+
+    z-index:500;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    background:#ffffff18;
+
+    transform:translateY(-3px);
+
+}
+
+/* =====================================================
+   GENERAL SECTION
+===================================================== */
+
+section{
+
+    min-height:100vh;
+
+    padding:
+    120px 20px 70px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home{
+
+    position:relative;
+
+}
+
+.home-content{
+
+    max-width:900px;
+
+    animation:fadeUp 1.5s ease;
+
+}
+
+.small-title{
+
+    letter-spacing:4px;
+
+    color:#ff79cf;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+
+}
+
+.hero-cake{
+
+    font-size:100px;
+
+    animation:float 3s ease-in-out infinite;
+
+}
+
+.home h1{
+
+    font-size:
+    clamp(45px,9vw,90px);
+
+    margin:20px 0;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff4fbd,
+        #fff,
+        #bd72ff,
+        #ff4fbd
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    animation:gradientMove 5s linear infinite;
+
+}
+
+@keyframes gradientMove{
+
+    to{
+        background-position:300%;
+    }
+
+}
+
+.home-description{
+
+    font-size:20px;
+
+    color:#ffffffaa;
+
+    line-height:1.7;
+
+}
+
+/* =====================================================
+   ENVELOPE
+===================================================== */
+
+.envelope-area{
+
+    margin:40px auto;
+
+    width:280px;
+    height:190px;
+
+    position:relative;
+
+    perspective:800px;
+
+    cursor:pointer;
+
+}
+
+.envelope{
+
+    width:100%;
+    height:100%;
+
+    position:relative;
+
+    background:#9d174d;
+
+    border-radius:10px;
+
+    box-shadow:
+    0 20px 50px #ff149344;
+
+}
+
+.envelope::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    border-left:140px solid transparent;
+    border-right:140px solid transparent;
+    border-top:100px solid #be185d;
+
+    transform-origin:top;
+
+    transition:1s;
+
+    z-index:3;
+
+}
+
+.envelope::after{
+
+    content:"💌";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    font-size:50px;
+
+    z-index:4;
+
+}
+
+.envelope.open::before{
+
+    transform:rotateX(180deg);
+
+}
+
+.envelope-text{
+
+    margin-top:15px;
+
+    color:#ffffffaa;
+
+}
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.btn{
+
+    border:none;
+
+    padding:14px 28px;
+
+    border-radius:40px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff269f,
+        #913cff
+    );
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    box-shadow:
+    0 0 25px #ff269f55;
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.04);
+
+    box-shadow:
+    0 0 40px #ff269f99;
+
+}
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+.countdown{
+
+    margin:35px auto;
+
+    max-width:720px;
+
+    width:95%;
+
+    padding:25px;
+
+    background:#ffffff0d;
+
+    border:1px solid #ffffff18;
+
+    border-radius:25px;
+
+    backdrop-filter:blur(15px);
+
+}
+
+.countdown-title{
+
+    color:#ffffffaa;
+
+    margin-bottom:20px;
+
+}
+
+.timer{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:10px;
+
+}
+
+.timer-box{
+
+    padding:15px 5px;
+
+    background:#00000040;
+
+    border-radius:15px;
+
+}
+
+.timer-box span{
+
+    display:block;
+
+    font-size:
+    clamp(25px,6vw,50px);
+
+    font-weight:bold;
+
+    color:#ff65c5;
+
+}
+
+.timer-box small{
+
+    color:#ffffff88;
+
+}
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title{
+
+    font-size:
+    clamp(35px,6vw,55px);
+
+    margin-bottom:12px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff5fc4,
+        #b56cff
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+.section-subtitle{
+
+    color:#ffffff88;
+
+    margin-bottom:35px;
+
+}
+
+/* =====================================================
+   TASKS
+===================================================== */
+
+.task-container{
+
+    width:min(700px,95%);
+
+}
+
+.task{
+
+    display:flex;
+
+    align-items:center;
+
+    text-align:left;
+
+    padding:20px;
+
+    margin:13px 0;
+
+    border-radius:18px;
+
+    background:#ffffff0c;
+
+    border:1px solid #ffffff12;
+
+    transition:.3s;
+
+}
+
+.task:hover{
+
+    transform:translateX(7px);
+
+    background:#ffffff12;
+
+}
+
+.task input{
+
+    width:20px;
+    height:20px;
+
+    margin-right:15px;
+
+    accent-color:#ff39ad;
+
+}
+
+.task.done{
+
+    border-color:#ff39ad88;
+
+    background:#ff39ad12;
+
+}
+
+.task.done label{
+
+    text-decoration:line-through;
+
+    opacity:.5;
+
+}
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-area{
+
+    width:min(700px,95%);
+
+    margin-bottom:25px;
+
+}
+
+.progress-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:8px;
+
+    color:#ffffffaa;
+
+}
+
+.progress-bar{
+
+    height:10px;
+
+    border-radius:20px;
+
+    background:#ffffff12;
+
+    overflow:hidden;
+
+}
+
+.progress{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff279f,
+        #a84cff
+    );
+
+    border-radius:20px;
+
+    transition:.5s;
+
+}
+
+/* =====================================================
+   LETTER
+===================================================== */
+
+.letter{
+
+    width:min(750px,95%);
+
+    padding:40px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffffff0d,
+        #ff4db30b
+    );
+
+    border:1px solid #ffffff18;
+
+    border-radius:25px;
+
+    line-height:1.9;
+
+    color:#ffffffcc;
+
+    box-shadow:
+    0 20px 70px #00000055;
+
+}
+
+.letter h3{
+
+    color:#ff70c9;
+
+    margin-bottom:20px;
+
+    font-size:28px;
+
+}
+
+.letter p{
+
+    margin-bottom:15px;
+
+}
+
+.song-card{
+
+    width:min(750px,95%);
+
+    margin-top:28px;
+
+    padding:30px 25px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffffff10,
+        #ff4db30d
+    );
+
+    border:1px solid #ffffff18;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 15px 45px #00000044;
+
+}
+
+.song-card h3{
+
+    font-size:28px;
+
+    color:#ff7dd3;
+
+    margin-bottom:20px;
+
+}
+
+.song-lyrics{
+
+    display:grid;
+    gap:10px;
+
+    color:#ffffffdd;
+
+    line-height:1.8;
+
+    font-size:17px;
+
+}
+
+.song-line{
+
+    display:block;
+
+    font-style:italic;
+
+}
+
+/* =====================================================
+   PHOTO
+===================================================== */
+
+.photo-box{
+
+    width:min(320px,90%);
+
+    height:380px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    margin:30px;
+
+    border:2px solid #ffffff22;
+
+    background:#ffffff0d;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.photo-box img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.photo-placeholder{
+
+    padding:30px;
+
+    color:#ffffff66;
+
+}
+
+/* =====================================================
+   REWARD
+===================================================== */
+
+.reward-card{
+
+    width:min(650px,95%);
+
+    padding:45px 30px;
+
+    border-radius:30px;
+
+    background:#ffffff0b;
+
+    border:1px solid #ffffff18;
+
+    transition:.6s;
+
+}
+
+.gift{
+
+    font-size:110px;
+
+    animation:float 2.5s infinite;
+
+}
+
+.reward-card.locked{
+
+    opacity:.55;
+
+    filter:grayscale(1);
+
+}
+
+.reward-card.unlocked{
+
+    animation:glow 1.5s infinite alternate;
+
+}
+
+@keyframes glow{
+
+    from{
+
+        box-shadow:
+        0 0 20px #ff149933;
+
+    }
+
+    to{
+
+        box-shadow:
+        0 0 80px #ff1493aa;
+
+    }
+
+}
+
+/* =====================================================
+   FINAL GIFT
+===================================================== */
+
+.final-gift{
+
+    display:none;
+
+    margin-top:25px;
+
+}
+
+.final-gift.show{
+
+    display:block;
+
+    animation:giftOpen 1s ease;
+
+}
+
+@keyframes giftOpen{
+
+    from{
+
+        opacity:0;
+        transform:scale(.3)
+        rotate(-10deg);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1)
+        rotate(0);
+
+    }
+
+}
+
+/* =====================================================
+   BIRTHDAY MIDNIGHT SCREEN
+===================================================== */
+
+#birthdayScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    radial-gradient(
+        circle,
+        #ff159955,
+        transparent 45%
+    ),
+    #050008;
+
+    z-index:2000;
+
+}
+
+.midnight-content{
+
+    padding:25px;
+
+    animation:
+    midnightZoom
+    1.2s ease;
+
+}
+
+.midnight-cake{
+
+    font-size:120px;
+
+    animation:
+    float
+    2s
+    infinite;
+
+}
+
+.midnight-content h1{
+
+    font-size:
+    clamp(
+        45px,
+        10vw,
+        100px
+    );
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff5fc4,
+        white,
+        #c46cff
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+.midnight-content p{
+
+    margin-top:20px;
+
+    font-size:20px;
+
+    color:#ffffffbb;
+
+    line-height:1.7;
+
+}
+
+@keyframes midnightZoom{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(.3);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1);
+
+    }
+
+}
+
+/* =====================================================
+   FLOATING HEARTS
+===================================================== */
+
+.heart{
+
+    position:fixed;
+
+    bottom:-30px;
+
+    pointer-events:none;
+
+    z-index:1000;
+
+    animation:
+    heartUp
+    linear
+    forwards;
+
+}
+
+@keyframes heartUp{
+
+    from{
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:1;
+
+    }
+
+    to{
+
+        transform:
+        translateY(-110vh)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+.confetti{
+
+    position:fixed;
+
+    top:-20px;
+
+    width:8px;
+    height:16px;
+
+    z-index:3000;
+
+    animation:
+    fall
+    4s
+    linear
+    forwards;
+
+}
+
+@keyframes fall{
+
+    to{
+
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =====================================================
+   FLOAT
+===================================================== */
+
+@keyframes float{
+
+    0%,100%{
+
+        transform:
+        translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+        translateY(-15px);
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
+
+.music-button{
+
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    width:50px;
+    height:50px;
+
+    border-radius:50%;
+
+    border:1px solid #ffffff22;
+
+    background:#ffffff12;
+
+    color:white;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    z-index:600;
+
+    font-size:20px;
+
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px){
+
+    nav a{
+
+        font-size:12px;
+
+        padding:
+        8px 10px;
+
+    }
+
+    .hero-cake{
+
+        font-size:75px;
+
+    }
+
+    .timer{
+
+        gap:5px;
+
+    }
+
+    .timer-box{
+
+        padding:10px 3px;
+
+    }
+
+    .letter{
+
+        padding:25px;
+
+    }
+
+    .midnight-cake{
+
+        font-size:80px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav>
+
+<a href="#home">🏠 Home</a>
+
+<a href="#tasks">🎯 Tasks</a>
+
+<a href="#letter">💌 Letter</a>
+
+<a href="#reward">🎁 Reward</a>
+
+</nav>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home">
+
+<div class="home-content">
+
+
+<div class="small-title">
+
+A LITTLE SURPRISE IS WAITING...
+
+</div>
+
+
+<div class="hero-cake">
+
+🎂
+
+</div>
+
+
+<h1>
+
+Happy Birthday
+<br>
+
+<span>
+Special One 💖
+</span>
+
+</h1>
+
+
+<p class="home-description">
+
+Some surprises are better when
+you wait for the perfect moment...
+
+<br>
+
+And this one arrives at
+exactly <b>00:00</b>. ✨
+
+</p>
+
+
+<!-- ENVELOPE -->
+
+<div
+class="envelope-area"
+onclick="openEnvelope()"
+>
+
+<div
+class="envelope"
+id="envelope"
+></div>
+
+<div class="envelope-text">
+
+💌 Tap the envelope
+
+</div>
+
+</div>
+
+
+<!-- COUNTDOWN -->
+
+<div class="countdown">
+
+
+<div class="countdown-title">
+
+⏳ Countdown to the special moment
+
+</div>
+
+
+<div class="timer">
+
+
+<div class="timer-box">
+
+<span id="days">00</span>
+
+<small>DAYS</small>
+
+</div>
+
+
+<div class="timer-box">
+
+<span id="hours">00</span>
+
+<small>HOURS</small>
+
+</div>
+
+
+<div class="timer-box">
+
+<span id="minutes">00</span>
+
+<small>MINUTES</small>
+
+</div>
+
+
+<div class="timer-box">
+
+<span id="seconds">00</span>
+
+<small>SECONDS</small>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<a
+href="#tasks"
+class="btn"
+>
+
+Begin The Journey ✨
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TASKS
+===================================================== -->
+
+<section id="tasks">
+
+
+<h2 class="section-title">
+
+Birthday Tasks 🎯
+
+</h2>
+
+
+<p class="section-subtitle">
+
+Complete these little challenges
+to unlock your gift.
+
+</p>
+
+
+<div class="progress-area">
+
+
+<div class="progress-info">
+
+<span>Journey Progress</span>
+
+<span id="progressText">
+0%
+</span>
+
+</div>
+
+
+<div class="progress-bar">
+
+<div
+class="progress"
+id="progress"
+></div>
+
+</div>
+
+
+</div>
+
+
+<div class="task-container">
+
+
+<div class="task">
+
+<input
+type="checkbox"
+id="task1"
+>
+
+<label for="task1">
+
+🌟 Smile for 10 seconds
+
+</label>
+
+</div>
+
+
+<div class="task">
+
+<input
+type="checkbox"
+id="task2"
+>
+
+<label for="task2">
+
+💭 Remember one beautiful memory
+
+</label>
+
+</div>
+
+
+<div class="task">
+
+<input
+type="checkbox"
+id="task3"
+>
+
+<label for="task3">
+
+❤️ Think of someone you're grateful for
+
+</label>
+
+</div>
+
+
+<div class="task">
+
+<input
+type="checkbox"
+id="task4"
+>
+
+<label for="task4">
+
+🎵 Play your favorite song
+
+</label>
+
+</div>
+
+
+<div class="task">
+
+<input
+type="checkbox"
+id="task5"
+>
+
+<label for="task5">
+
+🎂 Make one secret birthday wish
+
+</label>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     LETTER
+===================================================== -->
+
+<section id="letter">
+
+
+<h2 class="section-title">
+
+A Little Letter 💌
+
+</h2>
+
+
+<p class="section-subtitle">
+
+Something to read before the final surprise.
+
+</p>
+
+
+<div class="letter">
+
+
+<h3>
+
+To Someone Special 💖
+
+</h3>
+
+
+<p>
+
+Today isn't just another day.
+
+It's a reminder that another
+beautiful year of your life
+has begun.
+
+</p>
+
+
+<p>
+
+I hope this new chapter brings
+you countless reasons to smile,
+wonderful memories and moments
+you'll never forget.
+
+</p>
+
+
+<p>
+
+Keep being yourself.
+
+Keep dreaming.
+
+Keep smiling.
+
+And never forget how special
+your existence is. ✨
+
+</p>
+
+
+<p>
+
+May your birthday be as beautiful
+as the memories you are going
+to create.
+
+</p>
+
+
+<p>
+
+With lots of wishes,
+
+<br>
+
+🎂✨ Happy Birthday! ✨🎂
+
+</p>
+
+
+</div>
+
+
+<div class="song-card">
+
+<h3>
+
+🎶 A Birthday Song for You
+
+</h3>
+
+<div class="song-lyrics">
+
+<span class="song-line">Happy Birthday, my love, my heart's delight,</span>
+<span class="song-line">May your every wish bloom in the soft moonlight.</span>
+<span class="song-line">With every candle, with every smile,</span>
+<span class="song-line">You make my world feel warm and worthwhile.</span>
+
+<span class="song-line">I thank the stars for the day you came,</span>
+<span class="song-line">For the love you bring, for your gentle name.</span>
+<span class="song-line">May your dreams be sweet, may your days be kind,</span>
+<span class="song-line">May love surround you, heart and soul, in time.</span>
+
+<span class="song-line">Happy Birthday, my love, so beautiful and true,</span>
+<span class="song-line">May this year bring you all the joy you do to me.</span>
+<span class="song-line">With every breath, with every beat, I'll stay,</span>
+<span class="song-line">Cherishing you always in every way.</span>
+
+<span class="song-line">May your future glow with love so bright,</span>
+<span class="song-line">May your heart be wrapped in warmth and light.</span>
+<span class="song-line">I love you more with each passing day,</span>
+<span class="song-line">Happy Birthday, my love — forever, always.</span>
+
+</div>
+
+</div>
+
+
+<!-- OPTIONAL PHOTO -->
+
+<div class="photo-box">
+
+<div class="photo-placeholder">
+
+📸
+
+<br><br>
+
+Add your birthday photo here.
+
+<br><br>
+
+Replace the image section
+in the HTML with your own photo.
+
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     REWARD
+===================================================== -->
+
+<section id="reward">
+
+
+<h2 class="section-title">
+
+Your Final Reward 🎁
+
+</h2>
+
+
+<p class="section-subtitle">
+
+Complete every task to unlock it.
+
+</p>
+
+
+<div
+class="reward-card locked"
+id="rewardCard"
+>
+
+
+<div
+class="gift"
+id="gift"
+>
+
+🔒
+
+</div>
+
+
+<h3 id="rewardTitle">
+
+Reward Locked
+
+</h3>
+
+
+<p id="rewardMessage">
+
+Complete all five tasks
+to reveal your surprise.
+
+</p>
+
+
+<div
+class="final-gift"
+id="finalGift"
+>
+
+
+<p>
+
+🎉 YOU DID IT! 🎉
+
+</p>
+
+
+<br>
+
+
+<p>
+
+Your real gift is this:
+
+<br><br>
+
+💖
+
+<br>
+
+A whole new year full of
+beautiful possibilities.
+
+<br><br>
+
+🎂✨🌸✨🎂
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     MIDNIGHT BIRTHDAY SCREEN
+===================================================== -->
+
+<div id="birthdayScreen">
+
+
+<div class="midnight-content">
+
+
+<div class="midnight-cake">
+
+🎂
+
+</div>
+
+
+<h1>
+
+HAPPY BIRTHDAY! 🎉
+
+</h1>
+
+
+<p>
+
+12:00 AM
+
+<br>
+
+10 OCTOBER
+
+</p>
+
+
+<p>
+
+✨ The special moment has arrived. ✨
+
+<br>
+
+May this year bring you
+happiness, laughter and
+beautiful memories. 💖
+
+</p>
+
+
+<button
+class="btn"
+onclick="closeBirthdayScreen()"
+>
+
+Enter Your Birthday 🎁
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- MUSIC BUTTON -->
+
+<button
+class="music-button"
+onclick="toggleMusic()"
+id="musicButton"
+>
+
+🔇
+
+</button>
+
+
+
+<script>
+
+/* =====================================================
+   🎂 IMPORTANT DATE
+=====================================================
+
+   SPECIAL DATE:
+
+   10 OCTOBER 2026
+   EXACTLY 00:00:00
+
+===================================================== */
+
+const birthdayDate =
+new Date("2026-10-10T00:00:00");
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+let birthdayShown = false;
+
+
+function updateCountdown(){
+
+    const now = new Date();
+
+    const difference =
+        birthdayDate - now;
+
+
+    if(difference <= 0){
+
+        document.getElementById("days")
+        .innerText="00";
+
+        document.getElementById("hours")
+        .innerText="00";
+
+        document.getElementById("minutes")
+        .innerText="00";
+
+        document.getElementById("seconds")
+        .innerText="00";
+
+
+        showBirthday();
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000*60*60*24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (difference /
+            (1000*60*60)) % 24
+        );
+
+
+    const minutes =
+        Math.floor(
+            (difference /
+            (1000*60)) % 60
+        );
+
+
+    const seconds =
+        Math.floor(
+            (difference /
+            1000) % 60
+        );
+
+
+    document.getElementById("days")
+    .innerText =
+    String(days).padStart(2,"0");
+
+
+    document.getElementById("hours")
+    .innerText =
+    String(hours).padStart(2,"0");
+
+
+    document.getElementById("minutes")
+    .innerText =
+    String(minutes).padStart(2,"0");
+
+
+    document.getElementById("seconds")
+    .innerText =
+    String(seconds).padStart(2,"0");
+
+}
+
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+updateCountdown();
+
+
+/* =====================================================
+   MIDNIGHT CELEBRATION
+===================================================== */
+
+function showBirthday(){
+
+    if(birthdayShown)
+        return;
+
+    birthdayShown=true;
+
+
+    document.getElementById(
+        "birthdayScreen"
+    ).style.display="flex";
+
+
+    createConfetti();
+
+}
+
+
+/* =====================================================
+   CLOSE MIDNIGHT SCREEN
+===================================================== */
+
+function closeBirthdayScreen(){
+
+    document.getElementById(
+        "birthdayScreen"
+    ).style.display="none";
+
+}
+
+
+/* =====================================================
+   ENVELOPE
+===================================================== */
+
+function openEnvelope(){
+
+    const envelope =
+        document.getElementById(
+            "envelope"
+        );
+
+
+    envelope.classList.toggle(
+        "open"
+    );
+
+}
+
+
+/* =====================================================
+   TASK SYSTEM
+===================================================== */
+
+const tasks =
+document.querySelectorAll(
+    ".task input"
+);
+
+
+tasks.forEach(function(task){
+
+    task.addEventListener(
+        "change",
+        updateTasks
+    );
+
+});
+
+
+function updateTasks(){
+
+    let completed=0;
+
+
+    tasks.forEach(function(task){
+
+        const parent =
+            task.parentElement;
+
+
+        if(task.checked){
+
+            completed++;
+
+            parent.classList.add(
+                "done"
+            );
+
+        }
+        else{
+
+            parent.classList.remove(
+                "done"
+            );
+
+        }
+
+    });
+
+
+    const percentage =
+        Math.round(
+            completed /
+            tasks.length *
+            100
+        );
+
+
+    document.getElementById(
+        "progress"
+    ).style.width =
+    percentage+"%";
+
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+    percentage+"%";
+
+
+    if(
+        completed ===
+        tasks.length
+    ){
+
+        unlockReward();
+
+    }
+
+}
+
+
+/* =====================================================
+   UNLOCK REWARD
+===================================================== */
+
+function unlockReward(){
+
+    const card =
+        document.getElementById(
+            "rewardCard"
+        );
+
+
+    const gift =
+        document.getElementById(
+            "gift"
+        );
+
+
+    const title =
+        document.getElementById(
+            "rewardTitle"
+        );
+
+
+    const message =
+        document.getElementById(
+            "rewardMessage"
+        );
+
+
+    const finalGift =
+        document.getElementById(
+            "finalGift"
+        );
+
+
+    card.classList.remove(
+        "locked"
+    );
+
+
+    card.classList.add(
+        "unlocked"
+    );
+
+
+    gift.innerText="🎁";
+
+
+    title.innerText=
+    "SURPRISE UNLOCKED! 🎉";
+
+
+    message.innerText=
+    "You completed every birthday task!";
+
+
+    finalGift.classList.add(
+        "show"
+    );
+
+
+    createConfetti();
+
+}
+
+
+/* =====================================================
+   FLOATING HEARTS
+===================================================== */
+
+function createHeart(){
+
+    const heart =
+        document.createElement(
+            "div"
+        );
+
+
+    heart.className="heart";
+
+
+    const symbols=[
+        "💖",
+        "💕",
+        "💗",
+        "💓",
+        "✨",
+        "🌸"
+    ];
+
+
+    heart.innerText=
+    symbols[
+        Math.floor(
+            Math.random()*
+            symbols.length
+        )
+    ];
+
+
+    heart.style.left=
+    Math.random()*100+"vw";
+
+
+    heart.style.fontSize=
+    15+
+    Math.random()*25+
+    "px";
+
+
+    heart.style.animationDuration=
+    4+
+    Math.random()*5+
+    "s";
+
+
+    document.body.appendChild(
+        heart
+    );
+
+
+    setTimeout(
+        ()=>{
+            heart.remove();
+        },
+        9000
+    );
+
+}
+
+
+setInterval(
+    createHeart,
+    800
+);
+
+
+/* =====================================================
+   STARS
+===================================================== */
+
+for(
+    let i=0;
+    i<100;
+    i++
+){
+
+    const star =
+        document.createElement(
+            "div"
+        );
+
+
+    star.className="star";
+
+
+    star.style.left=
+    Math.random()*100+"vw";
+
+
+    star.style.top=
+    Math.random()*100+"vh";
+
+
+    star.style.animationDelay=
+    Math.random()*3+"s";
+
+
+    document.body.appendChild(
+        star
+    );
+
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+function createConfetti(){
+
+    for(
+        let i=0;
+        i<180;
+        i++
+    ){
+
+        const confetti =
+            document.createElement(
+                "div"
+            );
+
+
+        confetti.className=
+        "confetti";
+
+
+        confetti.style.left=
+        Math.random()*100+"vw";
+
+
+        confetti.style.background=
+        `hsl(
+            ${Math.random()*360},
+            100%,
+            65%
+        )`;
+
+
+        confetti.style.animationDelay=
+        Math.random()*2+"s";
+
+
+        document.body.appendChild(
+            confetti
+        );
+
+
+        setTimeout(
+            ()=>{
+                confetti.remove();
+            },
+            6000
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   BIRTHDAY MELODY
+=====================================================
+
+   A short birthday tune instead of a single beep.
+   The browser only allows sound after a user click,
+   so it starts from the music button.
+
+===================================================== */
+
+let audioContext=null;
+
+let melodyTimer=null;
+
+let musicPlaying=false;
+
+const birthdayMelody = [
+    { note: 261.63, duration: 0.38 },
+    { note: 261.63, duration: 0.38 },
+    { note: 293.66, duration: 0.46 },
+    { note: 261.63, duration: 0.46 },
+    { note: 349.23, duration: 0.46 },
+    { note: 329.63, duration: 0.82 },
+
+    { note: 261.63, duration: 0.38 },
+    { note: 261.63, duration: 0.38 },
+    { note: 293.66, duration: 0.46 },
+    { note: 261.63, duration: 0.46 },
+    { note: 392.0, duration: 0.46 },
+    { note: 349.23, duration: 0.82 },
+
+    { note: 261.63, duration: 0.38 },
+    { note: 261.63, duration: 0.38 },
+    { note: 523.25, duration: 0.46 },
+    { note: 440.0, duration: 0.46 },
+    { note: 349.23, duration: 0.46 },
+    { note: 329.63, duration: 0.46 },
+    { note: 293.66, duration: 0.82 },
+
+    { note: 392.0, duration: 0.38 },
+    { note: 392.0, duration: 0.38 },
+    { note: 440.0, duration: 0.46 },
+    { note: 349.23, duration: 0.46 },
+    { note: 349.23, duration: 0.46 },
+    { note: 329.63, duration: 0.46 },
+    { note: 349.23, duration: 0.82 }
+];
+
+
+function playTone(frequency, startTime, duration, volume = 0.06){
+
+    const oscillator =
+    audioContext.createOscillator();
+
+    const gainNode =
+    audioContext.createGain();
+
+    oscillator.type = "triangle";
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        startTime
+    );
+
+    gainNode.gain.setValueAtTime(
+        0.0001,
+        startTime
+    );
+
+    gainNode.gain.exponentialRampToValueAtTime(
+        volume,
+        startTime + 0.02
+    );
+
+    gainNode.gain.exponentialRampToValueAtTime(
+        0.0001,
+        startTime + duration
+    );
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start(startTime);
+    oscillator.stop(startTime + duration + 0.05);
+
+}
+
+
+function playBirthdayMelody(){
+
+    if(!audioContext)
+        return;
+
+    let startAt = audioContext.currentTime + 0.08;
+
+    birthdayMelody.forEach(function(step){
+
+        playTone(
+            step.note,
+            startAt,
+            step.duration
+        );
+
+        startAt += step.duration + 0.04;
+
+    });
+
+
+    melodyTimer =
+    setTimeout(function(){
+
+        if(musicPlaying){
+            playBirthdayMelody();
+        }
+
+    }, (startAt - audioContext.currentTime) * 1000 + 100);
+
+}
+
+
+function toggleMusic(){
+
+    if(!audioContext){
+
+        audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+
+    if(musicPlaying){
+
+        stopMusic();
+
+        return;
+
+    }
+
+
+    startMusic();
+
+}
+
+
+function startMusic(){
+
+    musicPlaying=true;
+
+    document.getElementById(
+        "musicButton"
+    ).innerText="🔊";
+
+    playBirthdayMelody();
+
+}
+
+
+function stopMusic(){
+
+    if(melodyTimer){
+
+        clearTimeout(melodyTimer);
+        melodyTimer=null;
+
+    }
+
+    musicPlaying=false;
+
+    document.getElementById(
+        "musicButton"
+    ).innerText="🔇";
+
+}
+
+</script>
+
+</body>
+</html>
+```
