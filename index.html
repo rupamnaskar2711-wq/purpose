@@ -760,6 +760,101 @@ section{
 
 }
 
+.photo-return-card{
+
+    width:min(650px,95%);
+
+    padding:30px;
+
+    text-align:left;
+
+    background:#ffffff0b;
+
+    border:1px solid #ffffff18;
+
+    border-radius:25px;
+
+}
+
+.photo-return-card h3{
+
+    color:#ff70c9;
+
+    margin-bottom:12px;
+
+    font-size:26px;
+
+}
+
+.photo-return-card p{
+
+    color:#ffffffaa;
+
+    line-height:1.6;
+
+    margin-bottom:20px;
+
+}
+
+.photo-return-card label{
+
+    display:block;
+
+    margin:16px 0 8px;
+
+    color:#ffffffdd;
+
+}
+
+.photo-return-card input,
+.photo-return-card textarea{
+
+    width:100%;
+
+    padding:12px 14px;
+
+    color:white;
+
+    background:#ffffff10;
+
+    border:1px solid #ffffff30;
+
+    border-radius:12px;
+
+    font:inherit;
+
+}
+
+.photo-return-card input[type="file"]{
+
+    padding:10px;
+
+}
+
+.photo-return-card textarea{
+
+    min-height:90px;
+
+    resize:vertical;
+
+}
+
+.photo-return-card .btn{
+
+    margin:20px 0 0;
+
+}
+
+.photo-return-status{
+
+    min-height:1.5em;
+
+    margin-top:12px;
+
+    color:#ffb6e2;
+
+}
+
 /* =====================================================
    REWARD
 ===================================================== */
@@ -1611,14 +1706,95 @@ With lots of wishes,
 
 <br><br>
 
-Add your birthday photo here.
+Would you share a favorite photo with me?
 
 <br><br>
 
-Replace the image section
-in the HTML with your own photo.
+You can send it using the form below.
 
 </div>
+
+</div>
+
+
+<div class="photo-return-card">
+
+<h3>📮 Send me a photo</h3>
+
+<p>
+
+Choose a photo and tell me who it's from. It will be sent to my Gmail as an attachment.
+FormSubmit processes the upload to deliver it.
+
+</p>
+
+<form
+id="photoReturnForm"
+action="https://formsubmit.co/rupamnaskar2711@gmail.com"
+method="POST"
+enctype="multipart/form-data"
+>
+
+<input
+type="hidden"
+name="_subject"
+value="A birthday photo was sent to you!"
+>
+
+<input
+type="hidden"
+name="_next"
+value="https://rupamnaskar2711-wq.github.io/purpose/?photo=sent#letter"
+>
+
+<input
+type="text"
+name="_honey"
+tabindex="-1"
+autocomplete="off"
+aria-hidden="true"
+style="display:none"
+>
+
+<label for="senderName">Your name</label>
+
+<input
+type="text"
+id="senderName"
+name="name"
+maxlength="100"
+autocomplete="name"
+required
+>
+
+<label for="photoAttachment">Choose a photo (up to 10 MB)</label>
+
+<input
+type="file"
+id="photoAttachment"
+name="attachment"
+accept="image/*"
+required
+>
+
+<label for="photoMessage">A little note (optional)</label>
+
+<textarea
+id="photoMessage"
+name="message"
+maxlength="1000"
+></textarea>
+
+<button type="submit" class="btn">Send the photo 💌</button>
+
+<p
+id="photoReturnStatus"
+class="photo-return-status"
+role="status"
+aria-live="polite"
+></p>
+
+</form>
 
 </div>
 
@@ -2188,6 +2364,57 @@ setInterval(
     createHeart,
     800
 );
+
+
+/* =====================================================
+   PHOTO SUBMISSION
+===================================================== */
+
+const photoReturnForm =
+    document.getElementById("photoReturnForm");
+
+const photoAttachment =
+    document.getElementById("photoAttachment");
+
+const photoReturnStatus =
+    document.getElementById("photoReturnStatus");
+
+
+photoReturnForm.addEventListener("submit", function(event){
+
+    const file = photoAttachment.files[0];
+
+    if(!file){
+        return;
+    }
+
+    if(!file.type.startsWith("image/")){
+
+        event.preventDefault();
+        photoReturnStatus.innerText =
+            "Please choose an image file.";
+        return;
+
+    }
+
+    if(file.size > 10 * 1024 * 1024){
+
+        event.preventDefault();
+        photoReturnStatus.innerText =
+            "That photo is larger than 10 MB. Please choose a smaller image.";
+        return;
+
+    }
+
+});
+
+
+if(new URLSearchParams(window.location.search).get("photo") === "sent"){
+
+    photoReturnStatus.innerText =
+        "Thank you! Your photo has been sent. 💖";
+
+}
 
 
 /* =====================================================
