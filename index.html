@@ -1723,8 +1723,7 @@ You can send it using the form below.
 
 <p>
 
-Choose a photo and tell me who it's from. It will be sent to my Gmail as an attachment.
-FormSubmit processes the upload to deliver it.
+Choose a photo and tell me who it's from. It will be emailed to me.
 
 </p>
 
@@ -1773,7 +1772,7 @@ required
 type="file"
 id="photoAttachment"
 name="attachment"
-accept="image/*"
+accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,image/avif"
 required
 >
 
@@ -2379,20 +2378,30 @@ const photoAttachment =
 const photoReturnStatus =
     document.getElementById("photoReturnStatus");
 
-
 photoReturnForm.addEventListener("submit", function(event){
 
     const file = photoAttachment.files[0];
 
     if(!file){
+        event.preventDefault();
+        photoReturnStatus.innerText =
+            "Please choose a photo to send.";
         return;
     }
 
-    if(!file.type.startsWith("image/")){
+    if(![
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif",
+        "image/heic",
+        "image/heif",
+        "image/avif"
+    ].includes(file.type.toLowerCase())){
 
         event.preventDefault();
         photoReturnStatus.innerText =
-            "Please choose an image file.";
+            "Please choose a JPEG, PNG, WebP, GIF, HEIC, HEIF, or AVIF photo.";
         return;
 
     }
@@ -2412,7 +2421,7 @@ photoReturnForm.addEventListener("submit", function(event){
 if(new URLSearchParams(window.location.search).get("photo") === "sent"){
 
     photoReturnStatus.innerText =
-        "Thank you! Your photo has been sent. 💖";
+        "Thank you! Your photo was submitted. 💖";
 
 }
 
